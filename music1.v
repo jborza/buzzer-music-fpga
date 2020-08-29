@@ -2,14 +2,18 @@ module music1(clk, speaker);
 input clk; //50  mhz clock
 output speaker;
 
-// first create a 16bit binary counter
-reg [15:0] counter;
-always @(posedge clk) 
-	if( counter == 101214) 
-		counter <= 0;
-	else
-		counter <= counter+1;
+//calculate clock divider for the A 440 note
+parameter clkdivider = 50000000/440/2;
 
-// and use the most significant bit (MSB) of the counter to drive the speaker
-assign speaker = counter[15];
+reg [14:0] counter;
+always @(posedge clk) 
+
+	if( counter == 0) 
+		counter <= clkdivider - 1;
+	else
+		counter <= counter - 1;
+		
+reg speaker;
+
+always @(posedge clk) if(counter == 0) speaker = ~speaker;
 endmodule
