@@ -3,3 +3,7 @@ incremental_db/*
 output_files/*
 *.cmp
 *.bak
+*.qpf
+*.xrf
+*.xsf
+*.vho
